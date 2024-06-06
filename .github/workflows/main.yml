@@ -15,11 +15,9 @@ jobs:
 
     - name: Update Version
       run: |
-        # Example versioning script using dotnet CLI
-        # Assumes your project file is named YourProject.csproj
-        version=$(dotnet list YourProject.csproj package --include-transitive --outdated | grep YourProject | awk '{ print $2 }')
+        version=$(dotnet list TemporalIO.Community.Actors.csproj package --include-transitive --outdated | grep TemporalIO.Community.Actors | awk '{ print $2 }')
         new_version=$(echo $version | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
-        dotnet pack YourProject.csproj -c Release /p:Version=$new_version
+        dotnet pack TemporalIO.Community.Actors.csproj -c Release /p:Version=$new_version
 
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v1
@@ -30,6 +28,6 @@ jobs:
       run: |
         dotnet build -c Release
         dotnet pack -c Release
-        dotnet nuget push YourPackage.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        dotnet nuget push TemporalIO.Community.Actors.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
       env:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
