@@ -11,7 +11,7 @@ jobs:
       project: MaximGorbatyuk.DatabaseSqlEndpoints
       PROJECT_FOLDER: ./TemporalIO.Community.Actors
       PROJECT_FILE: TemporalIO.Community.Actors/TemporalIO.Community.Actors.csproj
-      NUGET_PKG_LINK: https://nuget.pkg.github.com/maximgorbatyuk/index.json
+      NUGET_PKG_LINK: https://nuget.pkg.github.com/Tyler_Harker/index.json
     steps:
     - name: Checkout
       uses: actions/checkout@v2
