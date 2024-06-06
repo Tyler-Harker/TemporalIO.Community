@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "mSsBFptUcZ0=",
+  "success": true,
+  "projectFilePath": "/Users/tylerharker/Source/TemporalIO.Community.Actors/TemporalIO.Community.Actors.csproj",
+  "expectedPackageFiles": [
+    "/Users/tylerharker/.nuget/packages/google.protobuf/3.26.1/google.protobuf.3.26.1.nupkg.sha512",
+    "/Users/tylerharker/.nuget/packages/microsoft.extensions.logging.abstractions/2.2.0/microsoft.extensions.logging.abstractions.2.2.0.nupkg.sha512",
+    "/Users/tylerharker/.nuget/packages/temporalio/1.1.2/temporalio.1.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}
