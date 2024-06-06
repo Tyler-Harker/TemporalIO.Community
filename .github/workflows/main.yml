@@ -1,33 +1,46 @@
-name: Publish NuGet Package
+name: Publish nuget
 
 on:
   push:
-    branches:
-      - master
-
+    branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 15
+    env:
+      project: MaximGorbatyuk.DatabaseSqlEndpoints
+      PROJECT_FOLDER: ./TemporalIO.Community.Actors
+      PROJECT_FILE: TemporalIO.Community.Actors/TemporalIO.Community.Actors.csproj
+      NUGET_PKG_LINK: https://nuget.pkg.github.com/maximgorbatyuk/index.json
     steps:
-    - name: Checkout code
+    - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Update Version
-      run: |
-        version=$(dotnet list TemporalIO.Community.Actors/TemporalIO.Community.Actors.csproj package --include-transitive --outdated | grep TemporalIO.Community.Actors | awk '{ print $2 }')
-        new_version=$(echo $version | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
-        dotnet pack TemporalIO.Community.Actors/TemporalIO.Community.Actors.csproj -c Release /p:Version=$new_version
-
-    - name: Setup .NET SDK
+    - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: "8.0.x"
 
-    - name: Build and Publish
+    - name: Set version
       run: |
-        dotnet build -c Release
-        dotnet pack -c Release
-        dotnet nuget push TemporalIO.Community.Actors/TemporalIO.Community.Actors.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-      env:
-        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+       echo "Buid version is ${{github.run_number}}"
+       sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" ${{env.PROJECT_FILE}}
+
+    - name: Build
+      working-directory: ${{env.PROJECT_FOLDER}}
+      run: dotnet build --configuration Release
+
+    - name: Test
+      working-directory: ${{env.PROJECT_FOLDER}}
+      run: dotnet test --configuration Release --no-build
+
+    - name: Pack
+      working-directory: ${{env.PROJECT_FOLDER}}
+      run: dotnet pack --configuration Release --no-build --output .
+
+    - name: Publish nuget package
+      uses: brandedoutcast/publish-nuget@v2.5.2
+      with:
+          PROJECT_FILE_PATH: ${{env.PROJECT_FILE}}
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        
