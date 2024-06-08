@@ -1,0 +1,5 @@
+{
+  "dotnet.defaultSolution": "TemporalIO.Community.sln",
+  "csharpextensions.useFileScopedNamespace": true,
+  "editor.defaultFormatter": "csharpier.csharpier-vscode"
+}

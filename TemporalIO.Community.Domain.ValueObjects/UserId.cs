@@ -1,3 +1,3 @@
 ﻿namespace TemporalIO.Community.Domain.ValueObjects;
 
-public sealed record class UserId<T>(T Value) { }
+public readonly record struct UserId<T>(T Value) { }

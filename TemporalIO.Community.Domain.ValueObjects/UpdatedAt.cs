@@ -1,6 +1,3 @@
 ﻿namespace TemporalIO.Community.Domain.ValueObjects;
 
-public record class UpdatedAt
-{
-
-}
+public readonly record struct UpdatedAt(DateTime Value) { }
