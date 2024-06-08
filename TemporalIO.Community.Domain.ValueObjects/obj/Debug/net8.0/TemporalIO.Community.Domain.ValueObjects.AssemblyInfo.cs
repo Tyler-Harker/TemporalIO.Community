@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TemporalIO.Community.Domain.ValueObjects")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5636984c678cf1cdc4ba26b83bf8ce3a09e584fc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+52faadfd2d67ba1e92f0df483555b970197cbb58")]
 [assembly: System.Reflection.AssemblyProductAttribute("TemporalIO.Community.Domain.ValueObjects")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TemporalIO.Community.Domain.ValueObjects")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
