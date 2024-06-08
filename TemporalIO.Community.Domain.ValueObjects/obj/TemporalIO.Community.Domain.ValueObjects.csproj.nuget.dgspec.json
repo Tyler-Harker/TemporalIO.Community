@@ -8,7 +8,7 @@
       "version": "1.0.0",
       "restore": {
         "projectUniqueName": "/Users/tylerharker/Source/TemporalIO.Community.Domain.ValueObjects/TemporalIO.Community.Domain.ValueObjects.csproj",
-        "projectName": "TemporalIO.Community.Domain.ValueObjects",
+        "projectName": "TGHarker.Temporalio.Community.Domain.ValueObjects",
         "projectPath": "/Users/tylerharker/Source/TemporalIO.Community.Domain.ValueObjects/TemporalIO.Community.Domain.ValueObjects.csproj",
         "packagesPath": "/Users/tylerharker/.nuget/packages/",
         "outputPath": "/Users/tylerharker/Source/TemporalIO.Community.Domain.ValueObjects/obj/",
