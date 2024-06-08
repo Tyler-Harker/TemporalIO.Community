@@ -1,46 +1,32 @@
-name: Publish nuget
+name: Build and Publish NuGet Package
 
 on:
   push:
-    branches: [master]
+    tags:
+      - '*'
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    env:
-      project: MaximGorbatyuk.DatabaseSqlEndpoints
-      PROJECT_FOLDER: ./TemporalIO.Community.Actors
-      PROJECT_FILE: TemporalIO.Community.Actors/TemporalIO.Community.Actors.csproj
-      NUGET_PKG_LINK: https://nuget.pkg.github.com/Tyler_Harker/index.json
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '8.x' # Adjust based on your project's requirements
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: "8.0.x"
+      - name: Get latest tag
+        id: tag
+        run: echo "::set-output name=tag::$(git describe --abbrev=0 --tags)"
 
-    - name: Set version
-      run: |
-       echo "Buid version is ${{github.run_number}}"
-       sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" ${{env.PROJECT_FILE}}
+      - name: Build and Pack
+        run: dotnet pack -c Release -o ./output --version-suffix=${{ steps.tag.outputs.tag }}
 
-    - name: Build
-      working-directory: ${{env.PROJECT_FOLDER}}
-      run: dotnet build --configuration Release
-
-    - name: Test
-      working-directory: ${{env.PROJECT_FOLDER}}
-      run: dotnet test --configuration Release --no-build
-
-    - name: Pack
-      working-directory: ${{env.PROJECT_FOLDER}}
-      run: dotnet pack --configuration Release --no-build --output .
-
-    - name: Publish nuget package
-      uses: brandedoutcast/publish-nuget@v2.5.2
-      with:
-          PROJECT_FILE_PATH: ${{env.PROJECT_FILE}}
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-        
+      - name: Publish NuGet package
+        uses: nuget/publish@1
+        with:
+          nuget-api-key: ${{ secrets.NUGET_API_KEY }} # Replace with your NuGet API key secret
+          nuget-feed-url: https://www.nuget.org/api/v2/package
+          package-path: './output/*.nupkg'
