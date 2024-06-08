@@ -23,7 +23,7 @@ jobs:
         run: echo "::set-output name=tag::$(git describe --abbrev=0 --tags)"
 
       - name: Build and Pack
-        run: dotnet pack -c Release -o ./output --version-suffix=${{ steps.tag.outputs.tag }} -pPackageID=TGHarker.Temporalio.Actors
+        run: dotnet pack -c Release -o ./output --version-suffix=${{ steps.tag.outputs.tag }} -p:PackageID=TGHarker.Temporalio.Actors
 
       - name: Publish NuGet package
         run: dotnet nuget push ./output/*.nupkg --source "https://www.nuget.org/api/v2/package" --api-key ${{ secrets.NUGET_API_KEY }}
