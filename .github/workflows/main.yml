@@ -22,8 +22,14 @@ jobs:
         id: tag
         run: echo "::set-output name=tag::$(git describe --abbrev=0 --tags)"
 
+      - name: Replace Actors Version
+        run: sed -i "s/__VERSION__/${{ steps.tag.outputs.tag }}/g TemporalIO.Community.Actors/TemporalIO.Community.Actors.csproj"
+
+      - name: Replace Domain ValueObjects Version
+        run: sed -i "s/__VERSION__/${{ steps.tag.outputs.tag }}/g TemporalIO.Community.Domain.ValueObjects/TemporalIO.Community.Domain.ValueObjects.csproj"
+
       - name: Build and Pack
-        run: dotnet pack -c Release -o ./output --version-suffix=${{ steps.tag.outputs.tag }} -p:PackageID=TGHarker.Temporalio.Actors
+        run: dotnet pack -c Release -o ./output --version-suffix=${{ steps.tag.outputs.tag }}
 
       - name: Publish NuGet package
         run: dotnet nuget push ./output/*.nupkg --source "https://www.nuget.org/api/v2/package" --api-key ${{ secrets.NUGET_API_KEY }}

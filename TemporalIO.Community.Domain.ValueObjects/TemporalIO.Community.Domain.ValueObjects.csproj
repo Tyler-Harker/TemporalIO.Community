@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>TGHarker.Temporalio.Community.Domain.ValueObjects</PackageId>
+    <Version>__VERSION__</Version>
   </PropertyGroup>
 
 </Project>
